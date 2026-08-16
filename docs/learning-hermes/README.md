@@ -57,6 +57,18 @@ The most important boundaries are:
 | [08 — Change playbook](08-change-playbook.md) | How do I safely modify the project? | Tracing recipes and test strategy |
 | [09 — Code atlas](09-code-atlas.md) | Where is the code for a concept? | Fast lookup reference |
 
+## Hands-on practice
+
+The conceptual lessons above are paired with executable labs in the
+[`hands-on/`](hands-on/) directory:
+
+- [Learn the TypeScript TUI first](hands-on/00-ui-tui-first-look.md) — learn
+  the React/Ink structure, TypeScript file roles, and UI state before crossing
+  into the Python gateway.
+- [Trace one TUI message in a debugger](hands-on/01-tui-message-debugging-lab.md)
+  — configure TypeScript and Python debuggers, then follow one message through
+  JSON-RPC, `AIAgent.run_conversation()`, streaming events, and persistence.
+
 Read lessons 1–3 in order. After that, choose the track closest to the work you
 want to do:
 

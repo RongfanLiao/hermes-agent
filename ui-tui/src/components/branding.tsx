@@ -54,9 +54,11 @@ export function ArtLines({ lines }: { lines: [string, string][] }) {
 // Terminals can't scale glyphs, so "responsive" means picking a layout that
 // fits the available columns. Thresholds are picked so each tier reads
 // comfortably without forcing wrap or truncation drift on box-drawing edges.
-const TAG_FULL = 'Nous Research · Messenger of the Digital Gods'
-const TAG_MID = 'Messenger of the Digital Gods'
-const TAG_TINY = 'Nous Research'
+// The full tagline already fits the mid tier (30 cols), so FULL and MID are
+// the same string — only the sub-46-col tier needs a shortened form.
+const TAG_FULL = 'Intelligence from your Context'
+const TAG_MID = 'Intelligence from your Context'
+const TAG_TINY = 'Intelligence'
 const HIDE_BELOW = 34
 const COMPACT_FROM = 58
 
@@ -355,7 +357,7 @@ export function SessionPanel({ info, maxWidth, sid, t }: SessionPanelProps) {
 
       <Text color={t.color.accent}>
         {info.model.split('/').pop()}
-        <Text color={t.color.muted}> · Nous Research</Text>
+        <Text color={t.color.muted}> · {t.brand.name}</Text>
       </Text>
 
       <Text color={t.color.muted} wrap="truncate-end">
@@ -387,7 +389,7 @@ export function SessionPanel({ info, maxWidth, sid, t }: SessionPanelProps) {
         <Box flexDirection="column" marginBottom={1}>
           <Text color={t.color.accent} wrap="truncate-end">
             {info.model.split('/').pop()}
-            <Text color={t.color.muted}> · Nous Research</Text>
+            <Text color={t.color.muted}> · {t.brand.name}</Text>
           </Text>
           <Text color={t.color.muted} wrap="truncate-end">
             {info.cwd || process.cwd()}

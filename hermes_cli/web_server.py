@@ -3586,38 +3586,23 @@ async def run_config_migrate():
 
 @app.post("/api/ops/debug-share")
 async def run_debug_share_endpoint(body: DebugShareRequest | None = None):
-    """Upload a redacted debug report + full logs and return the paste URLs.
+    """Disabled in this deployment.
 
-    Unlike the other diagnostics actions (doctor, dump, prompt-size) this is
-    *synchronous*: the whole point of ``debug share`` is the set of shareable
-    URLs it produces, so we run the upload in a worker thread and return the
-    structured ``{urls, failures, redacted, ...}`` payload directly. The
-    dashboard renders those as real, copyable links instead of scraping a log
-    tail. Pastes auto-delete after 6 hours (handled inside the share core).
+    Upstream this uploaded a debug report + full logs to a public paste
+    service and returned shareable URLs. This fork removes that: the payload
+    carries system info and log tails off the host to a third party, and the
+    redaction pass is best-effort, not a guarantee. The dashboard card that
+    called it is gone too, but the route stays registered and refuses so a
+    stale client (or a direct POST) gets an explicit answer rather than a
+    bare 404 that reads like a routing bug.
+
+    ``hermes debug share`` on the CLI is unaffected — it is an explicit,
+    interactive opt-in. This only closes the dashboard's remote trigger.
     """
-    from hermes_cli.debug import build_debug_share
-
-    req = body or DebugShareRequest()
-    try:
-        result = await asyncio.to_thread(
-            build_debug_share,
-            log_lines=max(1, min(int(req.lines), 5000)),
-            redact=bool(req.redact),
-        )
-    except RuntimeError as exc:
-        # Required summary-report upload failed (offline / paste service down).
-        raise HTTPException(status_code=502, detail=f"Upload failed: {exc}")
-    except Exception as exc:
-        _log.exception("debug share failed")
-        raise HTTPException(status_code=500, detail=f"Failed: {exc}")
-
-    return {
-        "ok": True,
-        "urls": result.urls,
-        "failures": result.failures,
-        "redacted": result.redacted,
-        "auto_delete_seconds": result.auto_delete_seconds,
-    }
+    raise HTTPException(
+        status_code=404,
+        detail="Debug share is disabled in this deployment.",
+    )
 
 
 # ---------------------------------------------------------------------------

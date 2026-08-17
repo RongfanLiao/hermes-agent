@@ -1280,15 +1280,7 @@ export const api = {
   runDump: () => fetchJSON<ActionResponse>("/api/ops/dump", { method: "POST" }),
   runConfigMigrate: () =>
     fetchJSON<ActionResponse>("/api/ops/config-migrate", { method: "POST" }),
-  runDebugShare: (opts?: { redact?: boolean; lines?: number }) =>
-    fetchJSON<DebugShareResponse>("/api/ops/debug-share", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        redact: opts?.redact ?? true,
-        lines: opts?.lines ?? 200,
-      }),
-    }),
+  // runDebugShare removed — the debug-share upload is disabled in this fork.
 
 
   getCheckpoints: () => fetchJSON<CheckpointsResponse>("/api/ops/checkpoints"),

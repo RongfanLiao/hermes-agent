@@ -20,18 +20,15 @@ export function SidebarFooter({ status }: SidebarFooterProps) {
         {status?.version != null ? `v${status.version}` : "—"}
       </Typography>
 
-      <a
-        href="https://nousresearch.com"
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* Plain text, not a link: upstream pointed this at nousresearch.com,
+          which would send our own footer wordmark to someone else's site. */}
+      <Typography
         className={cn(
           "font-sans text-display text-xs tracking-[0.12em] text-midground",
-          "transition-opacity hover:opacity-90",
-          "focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-midground/40",
         )}
       >
         {t.app.footer.org}
-      </a>
+      </Typography>
     </div>
   );
 }

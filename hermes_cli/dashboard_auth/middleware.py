@@ -58,7 +58,11 @@ _GATE_PUBLIC_PREFIXES: tuple[str, ...] = (
     "/api/auth/providers",
     "/api/mcp/oauth/callback/",
     "/assets/",
+    # Tab and home-screen icons. They carry no data, and gating them makes
+    # the browser follow a 302 to the login HTML while expecting an image.
     "/favicon.ico",
+    "/favicon.svg",
+    "/apple-touch-icon.png",
     "/ds-assets/",
     "/fonts/",
     "/fonts-terminal/",
